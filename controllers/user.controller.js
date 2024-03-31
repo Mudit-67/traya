@@ -186,7 +186,7 @@ async function sendMail(email, password){
     from: 'mudit.rawat1996@gmail.com', // Sender email address
     to: email, // Recipient email address
     subject: 'Traya user temporary password mail', // Email subject
-    text: `Please login with your temporary password: ${password}` // Email body (plain text)
+    text: `Please login with your password: ${password}` // Email body (plain text)
   };
   
   // Send email
