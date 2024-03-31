@@ -1,5 +1,4 @@
 const {
-    superUserValidation,
     userValidation
   } = require("./user.validation");
 
@@ -10,7 +9,6 @@ const {
   } = require("./authentication.validation");
 
   module.exports = {
-    superUserValidation,
     userValidation,
     sortingPaginationValidation,
     loginValidation

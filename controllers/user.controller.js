@@ -55,15 +55,7 @@ const addSuperUser = async (req, res) => {
 
 const addUser = async (req, res) => {
   // #swagger.tags = ['Adminstrator - User']
-  // #swagger.summary = "Create User (Only Super User)"
-  /*
-    #swagger.parameters['authorization'] = {
-      in: 'header',
-      type: 'string',
-      required: true,
-      description: 'Authorization token'
-    }
-  */
+  // #swagger.summary = "User Register"
   /*
     #swagger.parameters['obj'] = {
       in: 'body',
@@ -72,7 +64,8 @@ const addUser = async (req, res) => {
       description: 'User details object',
       schema: {
         $name: "user1",
-        $email: "mudit762@gmail.com"
+        $email: "mudit762@gmail.com",
+        $password: "aaBB11##"
       }
     }
   */
@@ -85,20 +78,19 @@ const addUser = async (req, res) => {
   }
   user.user_id = uniqid();
   user.role = 'USER'
-  const tempPass = 'aaBB11##';
-  // const tempPass = uniqid(); --->uncomment this line to generate random password to mail and comment above line
 
   // Encrypt password
   const hashedPassword = await new Promise((resolve, reject) => {
-    bcrypt.hash(tempPass, saltRounds, (err, hash) => {
+    bcrypt.hash(user.password, saltRounds, (err, hash) => {
       if (err) reject(err);
       resolve(hash);
     });
   });
+  const tempPass = user.password;
   user.password = hashedPassword;
   const result = await UserService.addUser(user);
   if(result?.data?.user_id){
-    const mail = await sendMail(user.email, tempPass);
+    const mail = await sendMail(user.email, tempPass);// sending mail in case user user forgets password
   }
   return formatResponse(res, result, result.status);
 };

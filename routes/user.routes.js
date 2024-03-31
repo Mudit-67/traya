@@ -8,18 +8,18 @@ const apiLevelAuthentication = require("../middlewares/authentication.middleware
 
 router.post(
   "/super",
-  Validator("superUserValidation"),
+  Validator("userValidation"),
   UserController.addSuperUser
 );
 
-router.use(apiLevelAuthentication);
+router.post("/register", Validator("userValidation"), UserController.addUser);
 
-router.post("/", Validator("userValidation"), UserController.addUser);
+router.use(apiLevelAuthentication);
 router.get(
-  "/",
+  "/allUsers",
   Validator("sortingPaginationValidation", true),
   UserController.getUsers
 );
-router.get("/:user_id", UserController.getUser);
+router.get("/user/:user_id", UserController.getUser);
 
 module.exports = router;
